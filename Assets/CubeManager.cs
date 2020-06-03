@@ -10,19 +10,29 @@ using UnityEngine;
 using UnityEngine.SocialPlatforms;
 
 [ExecuteInEditMode]
-public class EditorSnap : MonoBehaviour
+[SelectionBase]
+public class CubeManager : MonoBehaviour
 {
 
     [Range(1f,20f)] [SerializeField] float gridSize = 10f;
+    TextMesh cubeText;
+    Vector3 snapPos;
 
     void Update()
     {
         SnapObjectPosition();
+
+        UpdateCubeText();
+    }
+
+    private void UpdateCubeText()
+    {
+        cubeText = GetComponentInChildren<TextMesh>();
+        cubeText.text = snapPos.x / gridSize + "," + snapPos.z / gridSize;
     }
 
     private void SnapObjectPosition()
     {
-        Vector3 snapPos;
         snapPos.x = Mathf.RoundToInt(transform.position.x / gridSize) * gridSize;
         snapPos.z = Mathf.RoundToInt(transform.position.z / gridSize) * gridSize;
 
