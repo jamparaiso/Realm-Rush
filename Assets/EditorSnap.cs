@@ -5,18 +5,27 @@
 // The Update() function is called, for example, when the GameObject transform
 // position is changed in the Editor.
 
+using System;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 
 [ExecuteInEditMode]
-public class PrintAwake : MonoBehaviour
+public class EditorSnap : MonoBehaviour
 {
-    void Awake()
-    {
-        Debug.Log("Editor causes this Awake");
-    }
+
+    [Range(1f,20f)] [SerializeField] float gridSize = 10f;
 
     void Update()
     {
-        Debug.Log("Editor causes this Update");
+        SnapObjectPosition();
+    }
+
+    private void SnapObjectPosition()
+    {
+        Vector3 snapPos;
+        snapPos.x = Mathf.RoundToInt(transform.position.x / gridSize) * gridSize;
+        snapPos.z = Mathf.RoundToInt(transform.position.z / gridSize) * gridSize;
+
+        transform.position = new Vector3(snapPos.x, 0f, snapPos.z);
     }
 }
