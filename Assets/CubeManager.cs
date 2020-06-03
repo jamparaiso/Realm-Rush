@@ -17,18 +17,20 @@ public class CubeManager : MonoBehaviour
     [Range(1f,20f)] [SerializeField] float gridSize = 10f;
     TextMesh cubeText;
     Vector3 snapPos;
+    string cubeName;
 
     void Update()
     {
         SnapObjectPosition();
-
-        UpdateCubeText();
+        gameObject.name = UpdateCubeText();
     }
 
-    private void UpdateCubeText()
+    private string UpdateCubeText()
     {
         cubeText = GetComponentInChildren<TextMesh>();
-        cubeText.text = snapPos.x / gridSize + "," + snapPos.z / gridSize;
+        cubeName = snapPos.x / gridSize + "," + snapPos.z / gridSize;
+        cubeText.text = cubeName;
+        return cubeName;
     }
 
     private void SnapObjectPosition()
