@@ -11,13 +11,19 @@ using UnityEngine.SocialPlatforms;
 
 [ExecuteInEditMode]
 [SelectionBase]
+[RequireComponent(typeof(WayPoint))]
 public class CubeManager : MonoBehaviour
 {
 
-    [Range(1f,20f)] [SerializeField] float gridSize = 10f;
     TextMesh cubeText;
     Vector3 snapPos;
     string cubeName;
+    WayPoint wayPoint;
+
+    void Awake()
+    {
+        wayPoint = GetComponent<WayPoint>();
+    }
 
     void Update()
     {
@@ -27,6 +33,8 @@ public class CubeManager : MonoBehaviour
 
     private string UpdateCubeText()
     {
+        int gridSize = wayPoint.GetGridsize();
+
         cubeText = GetComponentInChildren<TextMesh>();
         cubeName = snapPos.x / gridSize + "," + snapPos.z / gridSize;
         cubeText.text = cubeName;
@@ -35,6 +43,7 @@ public class CubeManager : MonoBehaviour
 
     private void SnapObjectPosition()
     {
+        int gridSize = wayPoint.GetGridsize();
         snapPos.x = Mathf.RoundToInt(transform.position.x / gridSize) * gridSize;
         snapPos.z = Mathf.RoundToInt(transform.position.z / gridSize) * gridSize;
 
