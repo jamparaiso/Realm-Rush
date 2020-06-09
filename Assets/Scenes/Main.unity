@@ -542,8 +542,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f4adcf10cb931c4c9c19fd8db5a94a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startWaypoint: {fileID: 0}
-  endWayPoint: {fileID: 0}
+  startWaypoint: {fileID: 887086937}
+  endWayPoint: {fileID: 791467984}
 --- !u!1001 &860621938
 PrefabInstance:
   m_ObjectHideFlags: 0
