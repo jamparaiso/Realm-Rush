@@ -10,14 +10,10 @@ using UnityEngine;
 using UnityEngine.SocialPlatforms;
 
 [ExecuteInEditMode]
-[SelectionBase]
+[SelectionBase] // select the whole object in editor instead of its individual parts when selected
 [RequireComponent(typeof(WayPoint))]
-public class CubeManager : MonoBehaviour
+public class CubeEditor : MonoBehaviour
 {
-
-    TextMesh cubeText;
-    Vector3 snapPos;
-    string cubeName;
     WayPoint wayPoint;
 
     void Awake()
@@ -28,25 +24,36 @@ public class CubeManager : MonoBehaviour
     void Update()
     {
         SnapObjectPosition();
-        gameObject.name = UpdateCubeText();
+        UpdateCubeLabel();
     }
 
-    private string UpdateCubeText()
+    private void UpdateCubeLabel()
     {
+        TextMesh cubeText = GetComponentInChildren<TextMesh>();
         int gridSize = wayPoint.GetGridsize();
 
-        cubeText = GetComponentInChildren<TextMesh>();
-        cubeName = snapPos.x / gridSize + "," + snapPos.z / gridSize;
+        string cubeName = GridPosX() / gridSize + "," + GridPosZ() / gridSize;
+        
         cubeText.text = cubeName;
-        return cubeName;
+        gameObject.name = cubeName;
     }
 
     private void SnapObjectPosition()
     {
-        int gridSize = wayPoint.GetGridsize();
-        snapPos.x = Mathf.RoundToInt(transform.position.x / gridSize) * gridSize;
-        snapPos.z = Mathf.RoundToInt(transform.position.z / gridSize) * gridSize;
+        transform.position = new Vector3(GridPosX(), 0f, GridPosZ()); ;
+    }
 
-        transform.position = new Vector3(snapPos.x, 0f, snapPos.z);
+    private float GridPosX()
+    {
+        Vector3 gridPos;
+        gridPos.x = wayPoint.GetGridPos().x;
+        return gridPos.x;
+    }
+
+    private float GridPosZ()
+    {
+        Vector3 gridPos;
+        gridPos.z = wayPoint.GetGridPos().y;
+        return gridPos.z;
     }
 }

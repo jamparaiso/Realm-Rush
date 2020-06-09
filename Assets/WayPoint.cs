@@ -4,22 +4,21 @@ using UnityEngine;
 
 public class WayPoint : MonoBehaviour
 {
+    Vector2Int gridPos;
     const int gridSize = 10;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
 
     public int GetGridsize()
     {
         return gridSize;
     }
 
-    // Update is called once per frame
-    void Update()
+    public Vector2 GetGridPos()
     {
-        
+        int xPos, zPos;
+
+        xPos = Mathf.RoundToInt(transform.position.x / gridSize) * gridSize;
+        zPos = Mathf.RoundToInt(transform.position.z / gridSize) * gridSize;
+
+        return new Vector2(xPos,zPos);
     }
 }
