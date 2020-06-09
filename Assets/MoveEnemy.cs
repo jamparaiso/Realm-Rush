@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class MoveEnemy : MonoBehaviour
 {
-
     [SerializeField] List<WayPoint> path;
 
     float dwellTime = 1f;
@@ -18,16 +17,16 @@ public class MoveEnemy : MonoBehaviour
 
     IEnumerator FollowPath()
     {
-        print("Starting Patrol...");
+        //print("Starting Patrol...");
 
         foreach (WayPoint wayPoint in path)
         {
             transform.position = wayPoint.transform.position;
-            print("Visiting Block: " + wayPoint.name);
+            //print("Visiting Block: " + wayPoint.name);
             yield return new WaitForSeconds(dwellTime);
         }
 
-        print("Ending Patrol..");
+        //print("Ending Patrol..");
     }
 
 

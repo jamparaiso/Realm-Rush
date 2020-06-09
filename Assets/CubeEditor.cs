@@ -16,6 +16,8 @@ public class CubeEditor : MonoBehaviour
 {
     WayPoint wayPoint;
 
+
+
     void Awake()
     {
         wayPoint = GetComponent<WayPoint>();
