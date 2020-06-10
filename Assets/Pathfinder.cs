@@ -5,10 +5,17 @@ using UnityEngine;
 
 public class Pathfinder : MonoBehaviour
 {
-
+    [SerializeField] WayPoint startWaypoint, endWayPoint;
     Dictionary<Vector2Int, WayPoint> grid = new Dictionary<Vector2Int, WayPoint>();
 
-    [SerializeField] WayPoint startWaypoint, endWayPoint;
+    //let the game know of the directions and save it on a list
+    Vector2Int[] directions = {
+        Vector2Int.up,
+        Vector2Int.right,
+        Vector2Int.down,
+        Vector2Int.left
+    };
+    
 
 
     // Start is called before the first frame update
@@ -16,6 +23,27 @@ public class Pathfinder : MonoBehaviour
     {
         LoadBlocks();
         ColorStartAndEnd();
+        ExploreNeighbor();
+    }
+
+    private void ExploreNeighbor()
+    {
+        foreach (Vector2Int direction in directions)
+        {
+            Vector2Int exploreCoordinate = startWaypoint.GetGridPos() + direction;
+
+            if (grid.ContainsKey(exploreCoordinate))
+            {
+                grid[exploreCoordinate].SetTopColor(Color.blue);
+            }
+            else
+            {
+                Debug.Log("Block Doesnt Exist");
+            }
+
+
+            //explore nearby nodes
+        }
     }
 
     private void ColorStartAndEnd()
