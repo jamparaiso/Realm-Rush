@@ -6,7 +6,9 @@ using UnityEngine;
 public class Pathfinder : MonoBehaviour
 {
     [SerializeField] WayPoint startWaypoint, endWayPoint;
+    [SerializeField] bool isRunning = true; // todo make private
     Dictionary<Vector2Int, WayPoint> grid = new Dictionary<Vector2Int, WayPoint>();
+    Queue<WayPoint> queue = new Queue<WayPoint>();
 
     //let the game know of the directions and save it on a list
     Vector2Int[] directions = {
@@ -16,33 +18,74 @@ public class Pathfinder : MonoBehaviour
         Vector2Int.left
     };
     
-
-
     // Start is called before the first frame update
     void Start()
     {
         LoadBlocks();
+        PathFind();
         ColorStartAndEnd();
-        ExploreNeighbor();
+        //ExploreNeighbor();
     }
 
-    private void ExploreNeighbor()
+    private void PathFind()
     {
-        foreach (Vector2Int direction in directions)
-        {
-            Vector2Int exploreCoordinate = startWaypoint.GetGridPos() + direction;
+        // add the starting block coordinate on queue
+        queue.Enqueue(startWaypoint);
 
-            if (grid.ContainsKey(exploreCoordinate))
+        while (queue.Count > 0 && isRunning)
+        {
+            //remove the first block in queue
+            //see FIFO
+            var searchCenter = queue.Dequeue();
+            searchCenter.isExplored = true;
+            print("Searching from: " + searchCenter); // todo remove log
+            HaltEndIfFound(searchCenter);
+            ExploreNeighbor(searchCenter);
+        }
+        print("Finished pathfinding");
+    }
+
+    private void HaltEndIfFound(WayPoint searchCenter)
+    {
+        if (searchCenter == endWayPoint)
+        {
+            print("End point found!"); // todo remove log
+            isRunning = false;
+        }
+    }
+
+    private void ExploreNeighbor(WayPoint currentBlock)
+    {
+        if (!isRunning) { return; } //endpoint found;
+
+        foreach (Vector2Int direction in directions)
+        { 
+            // find all blocks around the current block based on the directions[]
+            Vector2Int blockNeighbour = currentBlock.GetGridPos() + direction;
+            
+            //checks if block on the same coordidates
+            //this logic is applicable on this because it uses coordinates in which coordinates doesnt repeat
+            if (grid.ContainsKey(blockNeighbour))
             {
-                grid[exploreCoordinate].SetTopColor(Color.blue);
+                QueueNewNeighbour(blockNeighbour);
             }
             else
             {
-                Debug.Log("Block Doesnt Exist");
+                //Debug.Log("Block Doesnt Exist");
             }
 
+        }
+    }
 
-            //explore nearby nodes
+    private void QueueNewNeighbour(Vector2Int blockNeighbour)
+    {
+        WayPoint neighbourBlock = grid[blockNeighbour];
+
+        if (!neighbourBlock.isExplored && !queue.Contains(neighbourBlock))
+        {
+            neighbourBlock.SetTopColor(Color.blue);
+            queue.Enqueue(neighbourBlock); // adds the block on queue
+            print("Queueing: " + neighbourBlock);
         }
     }
 
