@@ -14,8 +14,7 @@ public class MoveEnemy : MonoBehaviour
         StartCoroutine(FollowPath());
     }
 
-
-    IEnumerator FollowPath()
+    IEnumerator FollowPath() //move enemy using coroutines
     {
         //print("Starting Patrol...");
 
