@@ -9,6 +9,7 @@ public class Pathfinder : MonoBehaviour
     [SerializeField] bool isRunning = true; // todo make private
     Dictionary<Vector2Int, WayPoint> grid = new Dictionary<Vector2Int, WayPoint>();
     Queue<WayPoint> queue = new Queue<WayPoint>();
+    WayPoint searchCenter;
 
     //let the game know of the directions and save it on a list
     Vector2Int[] directions = {
@@ -36,16 +37,18 @@ public class Pathfinder : MonoBehaviour
         {
             //remove the first block in queue
             //see FIFO
-            var searchCenter = queue.Dequeue();
+            searchCenter = queue.Dequeue();
             searchCenter.isExplored = true;
-            print("Searching from: " + searchCenter); // todo remove log
-            HaltEndIfFound(searchCenter);
-            ExploreNeighbor(searchCenter);
+
+            //print("Searching from: " + searchCenter); // todo remove log
+
+            HaltEndIfFound();
+            ExploreNeighbor();
         }
         print("Finished pathfinding");
     }
 
-    private void HaltEndIfFound(WayPoint searchCenter)
+    private void HaltEndIfFound()
     {
         if (searchCenter == endWayPoint)
         {
@@ -54,14 +57,14 @@ public class Pathfinder : MonoBehaviour
         }
     }
 
-    private void ExploreNeighbor(WayPoint currentBlock)
+    private void ExploreNeighbor()
     {
         if (!isRunning) { return; } //endpoint found;
 
         foreach (Vector2Int direction in directions)
         { 
             // find all blocks around the current block based on the directions[]
-            Vector2Int blockNeighbour = currentBlock.GetGridPos() + direction;
+            Vector2Int blockNeighbour = searchCenter.GetGridPos() + direction;
             
             //checks if block on the same coordidates
             //this logic is applicable on this because it uses coordinates in which coordinates doesnt repeat
@@ -84,8 +87,10 @@ public class Pathfinder : MonoBehaviour
         if (!neighbourBlock.isExplored && !queue.Contains(neighbourBlock))
         {
             neighbourBlock.SetTopColor(Color.blue);
-            queue.Enqueue(neighbourBlock); // adds the block on queue
-            print("Queueing: " + neighbourBlock);
+            queue.Enqueue(neighbourBlock); // adds the neighbour block on queue
+            neighbourBlock.exploredFrom = searchCenter; // log where the neighbour block explored from
+
+            //print("Queueing: " + neighbourBlock);
         }
     }
 
