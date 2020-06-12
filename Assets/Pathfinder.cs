@@ -6,12 +6,12 @@ using UnityEngine;
 public class Pathfinder : MonoBehaviour
 {
     [SerializeField] WayPoint startWaypoint, endWayPoint;
-    [SerializeField] bool isRunning = true; // todo make private
+    [SerializeField] bool isRunning = true;
+    //used dictionary to save blocks information because we need its location and the object where the script is attached to hence key and value pair
     Dictionary<Vector2Int, WayPoint> grid = new Dictionary<Vector2Int, WayPoint>();
     Queue<WayPoint> queue = new Queue<WayPoint>();
+    List<WayPoint> path = new List<WayPoint>();
     WayPoint searchCenter;
-
-    List<WayPoint> path = new List<WayPoint>(); // todo make private
 
     //let the game know of the directions and save it on a list
     Vector2Int[] directions = {
@@ -28,6 +28,7 @@ public class Pathfinder : MonoBehaviour
         BreadthFirstSearch();
         ColorStartAndEnd();
         CreatePath();
+
         return path;
     }
 
@@ -36,10 +37,13 @@ public class Pathfinder : MonoBehaviour
         path.Add(endWayPoint);
 
         WayPoint previous = endWayPoint.exploredFrom;
+
         while (previous != startWaypoint)
         {
+            previous.SetTopColor(Color.blue);
             path.Add(previous);
             previous = previous.exploredFrom;
+            //todo have a catch method when the endpoint is isolated
         }
 
         path.Add(startWaypoint);
@@ -58,44 +62,37 @@ public class Pathfinder : MonoBehaviour
             searchCenter = queue.Dequeue();
             searchCenter.isExplored = true;
 
-            //print("Searching from: " + searchCenter); // todo remove log
-
             HaltEndIfFound();
             ExploreNeighbor();
         }
-        print("Finished pathfinding");
+
     }
 
     private void HaltEndIfFound()
     {
         if (searchCenter == endWayPoint)
         {
-            print("End point found!"); // todo remove log
             isRunning = false;
         }
     }
 
     private void ExploreNeighbor()
     {
-        if (!isRunning) { return; } //endpoint found;
+        if (!isRunning) { return; } //stops the neighbour block search
 
         foreach (Vector2Int direction in directions)
         { 
             // find all blocks around the current block based on the directions[]
             Vector2Int blockNeighbour = searchCenter.GetGridPos() + direction;
             
-            //checks if block on the same coordidates
+            //checks if there isa  block on the same coordidates
             //this logic is applicable on this because it uses coordinates in which coordinates doesnt repeat
             if (grid.ContainsKey(blockNeighbour))
             {
                 QueueNewNeighbour(blockNeighbour);
             }
-            else
-            {
-                //Debug.Log("Block Doesnt Exist");
-            }
-
         }
+
     }
 
     private void QueueNewNeighbour(Vector2Int blockNeighbour)
@@ -104,11 +101,9 @@ public class Pathfinder : MonoBehaviour
 
         if (!neighbourBlock.isExplored && !queue.Contains(neighbourBlock))
         {
-            neighbourBlock.SetTopColor(Color.blue);
+            //neighbourBlock.SetTopColor(Color.blue);
             queue.Enqueue(neighbourBlock); // adds the neighbour block on queue
             neighbourBlock.exploredFrom = searchCenter; // log where the neighbour block explored from
-
-            //print("Queueing: " + neighbourBlock);
         }
     }
 
@@ -128,21 +123,16 @@ public class Pathfinder : MonoBehaviour
 
             if (grid.ContainsKey(gridPos))
             {
-                Debug.LogWarning("Skipping overlapping block " + waypoint);
+                Debug.LogWarning("Skipping overlapping blocks on:  " + waypoint);
             }
             else
             {
                 grid.Add(gridPos, waypoint);
                 waypoint.SetTopColor(Color.white);
             }
-
         }
-        print("Added " + grid.Count + " blocks");
+
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
 }

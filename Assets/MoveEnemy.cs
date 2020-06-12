@@ -17,16 +17,11 @@ public class MoveEnemy : MonoBehaviour
 
     IEnumerator FollowPath(List<WayPoint> path ) //move enemy using coroutines
     {
-        //print("Starting Patrol...");
-
         foreach (WayPoint wayPoint in path)
         {
             transform.position = wayPoint.transform.position;
-            print("Visiting Block: " + wayPoint.name);
            yield return new WaitForSeconds(dwellTime);
         }
-
-        print("Ending Patrol..");
     }
 
 

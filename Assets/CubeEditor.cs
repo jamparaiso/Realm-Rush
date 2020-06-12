@@ -29,7 +29,8 @@ public class CubeEditor : MonoBehaviour
 
     private void UpdateCubeLabel()
     {
-        TextMesh cubeText = GetComponentInChildren<TextMesh>(); //finds the specified component in the object
+        //finds the specified component in the object
+        TextMesh cubeText = GetComponentInChildren<TextMesh>(); 
         string cubeName = GridPosX()
                           + "," + 
                           GridPosZ();
