@@ -5,13 +5,13 @@
 // The Update() function is called, for example, when the GameObject transform
 // position is changed in the Editor.
 
-using System;
-using UnityEngine;
-using UnityEngine.SocialPlatforms;
 
-[ExecuteInEditMode]
+using UnityEngine;
+
+
+[ExecuteInEditMode] // apply script behavior in editor
 [SelectionBase] // select the whole object in editor instead of its individual parts when selected
-[RequireComponent(typeof(WayPoint))]
+[RequireComponent(typeof(WayPoint))] // make the script dependent to other script
 public class CubeEditor : MonoBehaviour
 {
     WayPoint wayPoint;
@@ -30,8 +30,6 @@ public class CubeEditor : MonoBehaviour
     private void UpdateCubeLabel()
     {
         TextMesh cubeText = GetComponentInChildren<TextMesh>(); //finds the specified component in the object
-        int gridSize = wayPoint.GetGridsize();
-
         string cubeName = GridPosX()
                           + "," + 
                           GridPosZ();

@@ -11,6 +11,8 @@ public class Pathfinder : MonoBehaviour
     Queue<WayPoint> queue = new Queue<WayPoint>();
     WayPoint searchCenter;
 
+    List<WayPoint> path = new List<WayPoint>(); // todo make private
+
     //let the game know of the directions and save it on a list
     Vector2Int[] directions = {
         Vector2Int.up,
@@ -19,16 +21,32 @@ public class Pathfinder : MonoBehaviour
         Vector2Int.left
     };
     
-    // Start is called before the first frame update
-    void Start()
+
+    public List<WayPoint> GetPath() //put all methods here because we want to reinitialize the script when this method is called
     {
         LoadBlocks();
-        PathFind();
+        BreadthFirstSearch();
         ColorStartAndEnd();
-        //ExploreNeighbor();
+        CreatePath();
+        return path;
     }
 
-    private void PathFind()
+    private void CreatePath()
+    {
+        path.Add(endWayPoint);
+
+        WayPoint previous = endWayPoint.exploredFrom;
+        while (previous != startWaypoint)
+        {
+            path.Add(previous);
+            previous = previous.exploredFrom;
+        }
+
+        path.Add(startWaypoint);
+        path.Reverse();
+    }
+
+    private void BreadthFirstSearch()
     {
         // add the starting block coordinate on queue
         queue.Enqueue(startWaypoint);
