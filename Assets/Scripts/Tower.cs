@@ -16,36 +16,67 @@ public class Tower : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        SetTargetEnemy();
+
         if (targetEnemy)
         {
-            LookForEnemy();
+            SnipeEnemy();
+            FireAtEnemy();
         }
         else
         {
-            ShootEnemy(false);
+            Shoot(false);
         }
 
     }
 
-    private void LookForEnemy()
+    private void SetTargetEnemy()
     {
-        float enemyDistance = Vector3.Distance(targetEnemy.transform.position, transform.position);
+        //finds all objects in the scene and put in on a list
+        var sceneEnemies = FindObjectsOfType<EnemyCollisionHandler>();
+
+        if (sceneEnemies.Length == 0) { return; }
+
+        Transform closestEnemy = sceneEnemies[0].transform; //gets the first on the list
+
+        foreach (EnemyCollisionHandler enemy in sceneEnemies)
+        {
+            targetEnemy = getClosest(closestEnemy, enemy.transform);
+        }
+    }
+
+    private Transform getClosest(Transform enemyA, Transform enemyB)
+    {
+        var distA = Vector3.Distance(transform.position, enemyA.transform.position);
+
+        var distB = Vector3.Distance(transform.position, enemyB.transform.position);
+
+        if (distA < distB)
+        {
+            return enemyA;
+        }
+          return enemyB;
+
+    }
+
+    private void FireAtEnemy()
+    {
+        float enemyDistance = Vector3.Distance(targetEnemy.transform.position, gameObject.transform.position);
 
         if (enemyDistance <= attackRange)
         {
-            SnipeEnemy();
-            ShootEnemy(true);
+            Shoot(true);
         }
         else
         {
-            ShootEnemy(false);
+            Shoot(false);
         }
     }
 
-    private void ShootEnemy(bool enabled)
+    private void Shoot(bool isActive)
     {
         var emmision = bulletEmission.emission;
-        emmision.enabled = enabled;
+        emmision.enabled = isActive;
     }
 
     private void SnipeEnemy()

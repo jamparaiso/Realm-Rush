@@ -8,7 +8,7 @@ using UnityEngine;
 public class EnemyCollisionHandler : MonoBehaviour
 {
 
-    [SerializeField] float enemyHp = 30f;
+    [SerializeField] float enemyHp = 3f;
     float towerDmg = 1f;
 
     private void Start()
@@ -33,9 +33,4 @@ public class EnemyCollisionHandler : MonoBehaviour
         enemyHp = enemyHp - towerDmg;
     }
 
-    private void addNonTriggerBoxCollider()
-    {
-        Collider collider = gameObject.AddComponent<BoxCollider>();
-        collider.isTrigger = false;
-    }
 }
