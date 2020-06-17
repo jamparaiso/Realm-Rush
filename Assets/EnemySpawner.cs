@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField] float secondsBetweenSpawns = 5f;
+    [Range(0.1f,120f)][SerializeField] float secondsBetweenSpawns = 5f;
     [SerializeField] MoveEnemy enemy; // only allows the same object to be attached in the editor
     bool gameOver = false;
 
@@ -18,7 +18,6 @@ public class EnemySpawner : MonoBehaviour
     {
         while (!gameOver)
         {
-            print("Spawning enemy");
             Instantiate(enemy, transform.position, Quaternion.identity,transform);
             yield return new WaitForSeconds(secondsBetweenSpawns);
         }

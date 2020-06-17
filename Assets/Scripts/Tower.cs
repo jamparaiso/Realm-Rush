@@ -5,10 +5,13 @@ using UnityEngine;
 
 public class Tower : MonoBehaviour
 {
+    //parameters
     [SerializeField] Transform objectToPan;
-    [SerializeField] Transform targetEnemy;
     [SerializeField] ParticleSystem bulletEmission;
     [SerializeField] float attackRange = 50f;
+
+    //state of tower
+    Transform targetEnemy;
 
     // Update is called once per frame
     void Update()
