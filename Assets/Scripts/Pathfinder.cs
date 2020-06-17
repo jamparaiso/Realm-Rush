@@ -13,6 +13,8 @@ public class Pathfinder : MonoBehaviour
     List<WayPoint> path = new List<WayPoint>();
     WayPoint searchCenter;
 
+    public bool isCalled = false;
+
     //let the game know of the directions and save it on a list
     Vector2Int[] directions = {
         Vector2Int.up,
@@ -24,10 +26,14 @@ public class Pathfinder : MonoBehaviour
 
     public List<WayPoint> GetPath() //put all methods here because we want to reinitialize the script when this method is called
     {
-        LoadBlocks();
-        BreadthFirstSearch();
-        ColorStartAndEnd();
-        CreatePath();
+        if (!isCalled)
+        {
+            LoadBlocks();
+            BreadthFirstSearch();
+            ColorStartAndEnd();
+            CreatePath();
+        }
+
 
         return path;
     }

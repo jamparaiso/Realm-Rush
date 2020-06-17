@@ -5,7 +5,7 @@ using UnityEngine;
 public class MoveEnemy : MonoBehaviour
 {
 
-    float dwellTime = 1f;
+    float dwellTime = 1.50f;
 
     // Start is called before the first frame update
     void Start()
@@ -13,6 +13,13 @@ public class MoveEnemy : MonoBehaviour
         Pathfinder pathfinder = FindObjectOfType<Pathfinder>();
         var path = pathfinder.GetPath();
         StartCoroutine(FollowPath(path));
+
+        if (!pathfinder.isCalled)
+        {
+            print("iscalled true");
+            pathfinder.isCalled = true; //tagged the path as arleady been called
+        }
+
     }
 
     IEnumerator FollowPath(List<WayPoint> path ) //move enemy using coroutines
