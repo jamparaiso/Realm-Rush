@@ -14,12 +14,6 @@ public class MoveEnemy : MonoBehaviour
         var path = pathfinder.GetPath();
         StartCoroutine(FollowPath(path));
 
-        if (!pathfinder.isCalled)
-        {
-            print("iscalled true");
-            pathfinder.isCalled = true; //tagged the path as arleady been called
-        }
-
     }
 
     IEnumerator FollowPath(List<WayPoint> path ) //move enemy using coroutines

@@ -26,14 +26,13 @@ public class Pathfinder : MonoBehaviour
 
     public List<WayPoint> GetPath() //put all methods here because we want to reinitialize the script when this method is called
     {
-        if (!isCalled)
+        if (path.Count == 0)
         {
             LoadBlocks();
             BreadthFirstSearch();
             ColorStartAndEnd();
             CreatePath();
         }
-
 
         return path;
     }
