@@ -13,7 +13,6 @@ public class Tower : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         if (targetEnemy)
         {
             LookForEnemy();
