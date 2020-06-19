@@ -22,6 +22,11 @@ public class WayPoint : MonoBehaviour
             Mathf.RoundToInt(transform.position.z / gridSize));
     }
 
+    private void OnMouseOver()
+    {
+        print("Mouse over " + gameObject.name);
+    }
+
     public void SetTopColor(Color color)
     {
         MeshRenderer topMesh =  transform.Find("Top").GetComponent<MeshRenderer>();
