@@ -24,7 +24,10 @@ public class WayPoint : MonoBehaviour
 
     private void OnMouseOver()
     {
-        print("Mouse over " + gameObject.name);
+        if (Input.GetMouseButtonDown(0))
+        {
+            print("Mouse clicked " + gameObject.name);
+        }
     }
 
     public void SetTopColor(Color color)
