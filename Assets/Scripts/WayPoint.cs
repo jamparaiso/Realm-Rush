@@ -7,6 +7,7 @@ public class WayPoint : MonoBehaviour
     public bool isExplored = false;
     public WayPoint exploredFrom;
     const int gridSize = 10;
+    public bool isPlaceable = true;
 
     public int GetGridsize()
     {

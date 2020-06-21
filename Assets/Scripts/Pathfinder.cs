@@ -39,20 +39,27 @@ public class Pathfinder : MonoBehaviour
 
     private void CreatePath()
     {
-        path.Add(endWayPoint);
+
+        markAsPath(endWayPoint);
 
         WayPoint previous = endWayPoint.exploredFrom;
 
         while (previous != startWaypoint)
         {
             previous.SetTopColor(Color.blue);
-            path.Add(previous);
+            markAsPath(previous);
             previous = previous.exploredFrom;
             //todo have a catch method when the endpoint is isolated
         }
 
-        path.Add(startWaypoint);
+        markAsPath(startWaypoint);
         path.Reverse();
+    }
+
+    private void markAsPath(WayPoint wayPoint)
+    {
+        path.Add(wayPoint);
+        wayPoint.isPlaceable = false;
     }
 
     private void BreadthFirstSearch()
