@@ -28,6 +28,14 @@ public class WayPoint : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             print("Mouse clicked " + gameObject.name);
+            if (isPlaceable)
+            {
+                print("placeable block");
+            }
+            else
+            {
+                print("not placeable block");
+            }
         }
     }
 
