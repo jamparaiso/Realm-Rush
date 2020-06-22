@@ -9,6 +9,8 @@ public class WayPoint : MonoBehaviour
     const int gridSize = 10;
     public bool isPlaceable = true;
 
+    [SerializeField] Tower towerPrefab;
+
     public int GetGridsize()
     {
         return gridSize;
@@ -27,16 +29,21 @@ public class WayPoint : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            print("Mouse clicked " + gameObject.name);
             if (isPlaceable)
             {
                 print("placeable block");
+                spawnTower();
             }
             else
             {
                 print("not placeable block");
             }
         }
+    }
+
+    private void spawnTower() {
+        Instantiate(towerPrefab, transform.position, Quaternion.identity, transform);
+        isPlaceable = false;
     }
 
     public void SetTopColor(Color color)
