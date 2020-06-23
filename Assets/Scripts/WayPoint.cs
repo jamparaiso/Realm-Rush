@@ -42,7 +42,7 @@ public class WayPoint : MonoBehaviour
     }
 
     private void spawnTower() {
-        Instantiate(towerPrefab, transform.position, Quaternion.identity, transform);
+        Instantiate(towerPrefab, transform.position, Quaternion.identity,transform);
         isPlaceable = false;
     }
 

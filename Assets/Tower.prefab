@@ -284,7 +284,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 3
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -3727,8 +3727,8 @@ ParticleSystem:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
-    minKillSpeed: 1
-    maxKillSpeed: 1
+    minKillSpeed: 500
+    maxKillSpeed: 600
     radiusScale: 1
     collidesWith:
       serializedVersion: 2
@@ -4800,7 +4800,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectToPan: {fileID: 4878665713720456269}
-  targetEnemy: {fileID: 0}
   bulletEmission: {fileID: 924609764}
   attackRange: 50
 --- !u!1001 &4880233895807303717

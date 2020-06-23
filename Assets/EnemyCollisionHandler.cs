@@ -7,7 +7,8 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public class EnemyCollisionHandler : MonoBehaviour
 {
-
+    [SerializeField] ParticleSystem hitFx;
+    [SerializeField] ParticleSystem deathFx;
     [SerializeField] float enemyHp = 3f;
     float towerDmg = 1f;
 
@@ -19,6 +20,8 @@ public class EnemyCollisionHandler : MonoBehaviour
         EnemyHitHandler();
         if (enemyHp == 0)
         {
+            var vfx = Instantiate(deathFx, transform.position, Quaternion.identity);
+            vfx.Play();
             KillEnemy();
         }
     }
@@ -30,6 +33,7 @@ public class EnemyCollisionHandler : MonoBehaviour
 
     private void EnemyHitHandler()
     {
+        hitFx.Play();
         enemyHp = enemyHp - towerDmg;
     }
 
