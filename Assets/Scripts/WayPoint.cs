@@ -31,7 +31,10 @@ public class WayPoint : MonoBehaviour
         {
             if (isPlaceable)
             {
+<<<<<<< Updated upstream
                 print("placeable block");
+=======
+>>>>>>> Stashed changes
                 spawnTower();
             }
             else

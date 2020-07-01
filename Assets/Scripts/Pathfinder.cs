@@ -10,7 +10,7 @@ public class Pathfinder : MonoBehaviour
     //used dictionary to save blocks information because we need its location and the object where the script is attached to hence key and value pair
     Dictionary<Vector2Int, WayPoint> grid = new Dictionary<Vector2Int, WayPoint>();
     Queue<WayPoint> queue = new Queue<WayPoint>();
-    List<WayPoint> path = new List<WayPoint>();
+    List<WayPoint> path = new List<WayPoint>(); //list of all object that have waypoint script attached to
     WayPoint searchCenter;
 
     public bool isCalled = false;
@@ -24,8 +24,9 @@ public class Pathfinder : MonoBehaviour
     };
     
 
-    public List<WayPoint> GetPath() //put all methods here because we want to reinitialize the script when this method is called
+    public List<WayPoint> GetPath() 
     {
+        //put all methods here because we want to reinitialize the script when this method is called
         if (path.Count == 0)
         {
             LoadBlocks();
@@ -39,7 +40,6 @@ public class Pathfinder : MonoBehaviour
 
     private void CreatePath()
     {
-
         markAsPath(endWayPoint);
 
         WayPoint previous = endWayPoint.exploredFrom;
@@ -58,6 +58,7 @@ public class Pathfinder : MonoBehaviour
 
     private void markAsPath(WayPoint wayPoint)
     {
+        //makes the block unplaceable
         path.Add(wayPoint);
         wayPoint.isPlaceable = false;
     }
@@ -97,7 +98,7 @@ public class Pathfinder : MonoBehaviour
             // find all blocks around the current block based on the directions[]
             Vector2Int blockNeighbour = searchCenter.GetGridPos() + direction;
             
-            //checks if there isa  block on the same coordidates
+            //checks if there is a  block on the same coordidates
             //this logic is applicable on this because it uses coordinates in which coordinates doesnt repeat
             if (grid.ContainsKey(blockNeighbour))
             {
@@ -143,8 +144,6 @@ public class Pathfinder : MonoBehaviour
                 waypoint.SetTopColor(Color.white);
             }
         }
-
     }
-
 
 }

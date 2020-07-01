@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class MoveEnemy : MonoBehaviour
 {
-
-    float dwellTime = 1.50f;
+    float dwellTime = .50f;
+    [SerializeField] ParticleSystem endDeathFx;
 
     // Start is called before the first frame update
     void Start()
@@ -23,12 +23,16 @@ public class MoveEnemy : MonoBehaviour
             transform.position = wayPoint.transform.position;
            yield return new WaitForSeconds(dwellTime);
         }
+
+        SelfDestruct();
+        Destroy(gameObject);
     }
 
-
-    // Update is called once per frame
-    void Update()
+    void SelfDestruct()
     {
-        
+        var deathFx = Instantiate(endDeathFx, transform.position, Quaternion.identity);
+        deathFx.Play();
+        Destroy(deathFx.gameObject, deathFx.main.duration);
     }
+
 }
