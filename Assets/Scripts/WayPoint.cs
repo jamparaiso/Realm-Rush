@@ -41,8 +41,7 @@ public class WayPoint : MonoBehaviour
     }
 
     private void spawnTower() {
-        Instantiate(towerPrefab, transform.position, Quaternion.identity,transform);
-        isPlaceable = false;
+        FindObjectOfType<TowerFactory>().addTower(this);
     }
 
     public void SetTopColor(Color color)
