@@ -15,7 +15,6 @@ public class Tower : MonoBehaviour
     //state of tower
     Transform targetEnemy;
 
-    // Update is called once per frame
     void Update()
     {
         SetTargetEnemy();
@@ -37,7 +36,7 @@ public class Tower : MonoBehaviour
         //finds all objects in the scene and put in on a list
         var sceneEnemies = FindObjectsOfType<EnemyCollisionHandler>();
 
-        if (sceneEnemies.Length == 0) { return; }
+        if (sceneEnemies.Length == 0) { return; } //no enemies
 
         Transform closestEnemy = sceneEnemies[0].transform; //gets the first on the list
 
@@ -50,12 +49,11 @@ public class Tower : MonoBehaviour
     private Transform getClosest(Transform enemyA, Transform enemyB)
     {
         var distA = Vector3.Distance(transform.position, enemyA.transform.position);
-
         var distB = Vector3.Distance(transform.position, enemyB.transform.position);
 
         if (distA < distB)
         {
-            return enemyA;
+          return enemyA;
         }
           return enemyB;
 

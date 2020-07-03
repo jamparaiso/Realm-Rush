@@ -31,10 +31,7 @@ public class CubeEditor : MonoBehaviour
         //finds the specified component in the object
         TextMesh cubeText = GetComponentInChildren<TextMesh>();
 
-        string cubeName = GridPosX()
-                          + "," + 
-                          GridPosZ();
-        
+        string cubeName = GridPosX() + "," + GridPosZ();
         cubeText.text = cubeName;
         gameObject.name = cubeName;
     }
@@ -42,10 +39,7 @@ public class CubeEditor : MonoBehaviour
     private void SnapObjectPosition()
     {
         int gridSize = wayPoint.GetGridsize();
-        transform.position = new Vector3(
-            GridPosX() * gridSize,
-            0f,
-            GridPosZ() * gridSize); ;
+        transform.position = new Vector3( GridPosX() * gridSize, 0f , GridPosZ() * gridSize);
     }
 
     private float GridPosX()

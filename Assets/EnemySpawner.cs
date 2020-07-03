@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
@@ -9,7 +8,6 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] Transform enemyParent;
     bool gameOver = false;
 
-    // Start is called before the first frame update
     void Start()
     {
         StartCoroutine(SpawnEnemy());
@@ -20,7 +18,6 @@ public class EnemySpawner : MonoBehaviour
         while (!gameOver)
         {
             Instantiate(enemy, transform.position, Quaternion.identity,enemyParent);
-
             yield return new WaitForSeconds(secondsBetweenSpawns);
         }
     }

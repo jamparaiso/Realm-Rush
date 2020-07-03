@@ -23,28 +23,23 @@ public class TowerFactory : MonoBehaviour
         }
 
     }
-
+    private void InstantiateTower(WayPoint wayPoint)
+    {
+        var tower = Instantiate(towerPrefab, wayPoint.transform.position, Quaternion.identity,gameObject.transform); //create tower on the block
+        tower.baseWaypoint = wayPoint; // let the tower know what block does it stand on
+        wayPoint.isPlaceable = false; //makes the block unplaceable to towers
+        towerQueue.Enqueue(tower); //put the tower into the queue
+    }
     private void MoveExistingTower(WayPoint newBaseWaypoint)
     {
         var oldTower = towerQueue.Dequeue(); // removes the first tower on the queue
-
         oldTower.baseWaypoint.isPlaceable = true; // set the block where the tower stands placeable
         newBaseWaypoint.isPlaceable = false; //makes the selected block unplaceable
 
         oldTower.baseWaypoint = newBaseWaypoint; //replace the old block to the new selected block
         oldTower.transform.position = newBaseWaypoint.transform.position; // moves the first tower in queue to the selected block
-
-        towerQueue.Enqueue(oldTower); // add the tower to the end of the queue
-
-    }
-
-    private void InstantiateTower(WayPoint wayPoint)
-    {
-        //create tower on the block
-        var tower = Instantiate(towerPrefab, wayPoint.transform.position, Quaternion.identity,gameObject.transform);
-        tower.baseWaypoint = wayPoint; // let the tower know what block does it stand on
-        wayPoint.isPlaceable = false;
-        towerQueue.Enqueue(tower);
+        towerQueue.Enqueue(oldTower); // add the tower to the the queue
 
     }
+
 }

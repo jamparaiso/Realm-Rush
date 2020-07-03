@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class MoveEnemy : MonoBehaviour
 {
-    float dwellTime = .50f;
     [SerializeField] ParticleSystem endDeathFx;
+    float dwellTime = .50f;
 
-    // Start is called before the first frame update
     void Start()
     {
         Pathfinder pathfinder = FindObjectOfType<Pathfinder>();
@@ -24,7 +23,7 @@ public class MoveEnemy : MonoBehaviour
            yield return new WaitForSeconds(dwellTime);
         }
 
-        SelfDestruct();
+        SelfDestruct(); // enemy reach the end of the path
         Destroy(gameObject);
     }
 

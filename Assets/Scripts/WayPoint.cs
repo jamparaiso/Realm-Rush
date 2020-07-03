@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class WayPoint : MonoBehaviour
 {
+    public WayPoint exploredFrom;    
     public bool isExplored = false;
-    public WayPoint exploredFrom;
-    const int gridSize = 10;
     public bool isPlaceable = true;
+
+    const int gridSize = 10;
 
     [SerializeField] Tower towerPrefab;
 
@@ -22,7 +23,8 @@ public class WayPoint : MonoBehaviour
     {
         return new Vector2Int(
             Mathf.RoundToInt(transform.position.x / gridSize),
-            Mathf.RoundToInt(transform.position.z / gridSize));
+            Mathf.RoundToInt(transform.position.z / gridSize)
+            );
     }
 
     private void OnMouseOver()
